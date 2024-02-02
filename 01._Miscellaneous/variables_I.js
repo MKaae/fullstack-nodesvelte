@@ -22,4 +22,10 @@ hobbies.push("sleeping");
 
 //type coercion always use === or !==(strict equality) if yo uwant to check on the types == tries to make numbers into string etc to compare
 
+const kea = {
+    address: "Guldbergsgade", 
+    studentsInBuilding: 204
+}
+// du kan lave funktioner i objekter, kan du ikke i json.
+// keys skal være strings i json. Fx "address". Key of value -> key-value pair.
 

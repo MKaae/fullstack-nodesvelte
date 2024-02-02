@@ -40,6 +40,9 @@ console.log(newNumbers)
 
 const letters = "abc";
 // Get me the character "c"
+// const newLetter = letters[2]
+// const newLetter = letters.substring(2, 3)
+// const newLetter = letters.slice(2, 3)
 
 const newLetter = letters.charAt(letters.length-1)
 
@@ -51,7 +54,9 @@ console.log(newLetter)
 
 const fact = "You are learning javascript!";
 
-const newFact = fact.replace(/j/, "J")
+// const newFact = fact.replace(/j/, "J")
+
+const newFact = fact.replace("j", "J");
 console.log(newFact)
 
 // capitalize the J in Javascript
