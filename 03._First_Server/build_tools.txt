@@ -1,0 +1,9 @@
+Examples: maven(java), gradle(java), ant(java), npm(js), cargo(rust)
+
+Java            Node.js
+maven           npm, yarn
+pom.xml         package.json
+
+meta info       meta info
+dependencies    dependencies
+life cycles     scripts

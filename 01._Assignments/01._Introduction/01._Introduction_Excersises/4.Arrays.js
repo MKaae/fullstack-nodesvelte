@@ -17,9 +17,9 @@ const friends = [];
 
 // What a lonely array. Add at least 3 friend objects to it.  
 
-friends.push({name:"firstFriend"})
-friends.push({name:"secondFriend"})
-friends.push({name:"thirdFriend"})
+friends.push({name: "firstFriend"})
+friends.push({name: "secondFriend"})
+friends.push({name: "thirdFriend"})
 // --------------------------------------
 // Exercise 3 - Get the index of first occurance of that value. 
 
