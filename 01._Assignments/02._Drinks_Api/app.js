@@ -1,4 +1,6 @@
-const app = require("express")();
+const express = require("express");
+const app = express();
+
 
 const drinks = [
     {
@@ -19,14 +21,20 @@ const drinks = [
 ];
 
 app.get(("/drinks"), (req, res) => {
-    res.send(drinks);
+    res.send({ data: drinks });
 });
-
+// we use find here because find stops when it finds the element and filter would read through the entire array. Less time complexity.
 app.get(("/drinks/:id"), (req, res) => {
-    const id = Number(req.params.id);
-    if(!id || id > drinks.length || id < 1) res.send( { data: "You have typed an incorrect value, or it doesnt exist"} );
+    const id = Number(req.params?.id);
+    if(!id) res.status(404).send( { data: "You have typed an incorrect value, or it doesnt exist"} );
     const drink = drinks.find(drink => drink.id === id);
-    res.send(drink);
+    res.send({ data: drink });
 });
 
-app.listen(8080);
+app.listen(8080, (error) => {
+    if(error){
+        console.log("Error starting the server");
+        return;
+    }
+    console.log("Server is running on port", 8080);
+});

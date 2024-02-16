@@ -1,7 +1,9 @@
-// const express = require("express");
-// const app = express();
+// const app = require("express")();
 
-const app = require("express")();
+const express = require("express");
+const app = express();
+
+app.use(express.json());
 
 let accountBalance = 100;
 // route
@@ -53,6 +55,23 @@ app.get("/fillUpWallet/:fillUpWallet", (req, res) => {
     }
 
 })
+// if you dont have return you get cannot set headers to client error - to fix this use return or an else statement
+app.get("/saySomethingNiceAboutMe/:greeting", (req, res) => {
+    console.log(req.params.greeting);
+    const query = req.query.handsome;
+    console.log(req.query);
+    // task: if the client defines handsome as very then return "thanks cool cat"
+    // task: otherwise say "ain't no thang"
+    if(query !== "very"){ 
+        return res.send({ data: "ain't no thang" });
+    } 
+    res.send({ data: "thanks cool cat" })
+});
+
+app.post("/postman", (req, res) => {
+    console.log(req.body);
+    res.send({ data: req.body });
+});
 
 app.get("/page", (req, res) => {
     res.send("<h1> Welcome to my page</h1>");
