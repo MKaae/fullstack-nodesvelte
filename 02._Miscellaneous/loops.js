@@ -1,5 +1,5 @@
 // loop methods
-// for each, map, filter, sort, find, reduce
+// forEach, map, filter, sort, find, reduce
 
 const dogs = [
     { name: "Lassie", famelevel: 13 },
@@ -32,7 +32,7 @@ const dogsWithSex = increasedFamelevelDogs.map((dog) => {
 });
 
 console.log(dogsWithSex);
-
+// we do this because we want to create a new object and return it to the new array instead of also modifying the old array.
 const dogsGender = increasedFamelevelDogs.map((dog) => ({
     ...dog, 
     male: dog.name === "Lassie" ? false : true
