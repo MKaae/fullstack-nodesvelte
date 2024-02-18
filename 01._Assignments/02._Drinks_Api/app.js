@@ -24,7 +24,7 @@ const drinks = [
 app.get((`/drinks`), (req, res) => {
     res.send({ data: drinks });
 });
-// we use find here because find stops when it finds the element and filter would read through the entire array. Less time complexity.
+
 app.get((`/drinks/:id`), (req, res) => {
     const id = Number(req.params.id);
     if(!id || id < 0){
