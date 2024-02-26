@@ -3,10 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="./homepage.css"> -->
+    <style>
+        h1 {
+            color: red;
+        }
+    </style>
     <title>Homepage</title>
 </head>
 <body>
     <h1>Does this work!?!?!?!</h1>
-    
+    <!-- inline styling -->
+    <div id="celebration-box" style="color: green">
+        <h3>Yes it does</h3>
+    </div>
+    <input id="name-input" placeholder="Your name here"/>
+    <button id="button">Get greeting</button>
+    <h2 id="greeting-text"></h2>
+    <!-- this point to the endpoint public square not the file -->
+    <a href="/publicSquare">Public Square</a>
+    <script>
+        // task make a request to /greeting and console log the greeting.
+        const button = document.getElementById("button");
+        button.addEventListener('click', getGreeting);
+        const nameInput = document.getElementById(`name-input`);
+        const greetingH2 = document.getElementById(`greeting-text`);
+
+        function getGreeting(){
+            const name = nameInput.value;
+            const data = fetch(`/greeting?name=` + name)
+                .then(response => response.json())
+                .then(result => greetingH2.textContent = result.data);
+        }
+    </script>
+    <!-- <script src="./homepage.js"></script> -->
 </body>
 </html>

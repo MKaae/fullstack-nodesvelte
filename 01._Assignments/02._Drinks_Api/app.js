@@ -21,17 +21,19 @@ const drinks = [
     }
 ];
 
+let nextId = 3;
+
 app.get((`/drinks`), (req, res) => {
     res.send({ data: drinks });
 });
 
 app.get((`/drinks/:id`), (req, res) => {
-    const id = Number(req.params.id);
-    if(!id || id < 0){
+    const providedDrinkId = Number(req.params.id);
+    if(!providedDrinkId || providedDrinkId < 0){
         return res.status(404).send({ data: `You have typed an incorrect value, or it doesn't exist.` });
     };
     
-    const drink = drinks.find(drink => drink.id === id);
+    const drink = drinks.find(drink => drink.id === providedDrinkId);
     if(!drink){
         return res.status(404).send({ data: `You have typed an incorrect value, or it doesn't exist.` });
     };
@@ -40,19 +42,11 @@ app.get((`/drinks/:id`), (req, res) => {
 
 app.post((`/drinks`), (req, res) => {
     const requestBody = req.body;
-    const nextId = (drinks) => {
-        if(drinks.length === 0) {
-            return 1;
-        };
-        const maxId = drinks.reduce((max, drink) => {
-            return drink.id > max ? drink.id : max;
-        }, 0);
-        return maxId + 1;
-    };
+    requestBody.id = ++nextId;
 
     if(requestBody.name && requestBody.ingredients){
         const newDrink = {
-            id: nextId(drinks),
+            id: requestBody.id,
             name: requestBody.name,
             ingredients: requestBody.ingredients
         };
@@ -63,58 +57,51 @@ app.post((`/drinks`), (req, res) => {
 });
 
 app.put((`/drinks/:id`), (req, res) => {
-    const id = Number(req.params.id);
+    const providedDrinkId = Number(req.params.id);
     const name = req.body.name;
     const ingredients = req.body.ingredients;
 
-    if(!id || !name || !ingredients){
+    if(!providedDrinkId || !name || !ingredients){
         return res.status(404).send({ data: `You have typed an incorrect value, or it doesn't exist.` });
     };
 
-    const index = drinks.findIndex(drink => drink.id === id);
+    const index = drinks.findIndex(drink => drink.id === providedDrinkId);
     if(index === -1){
         return res.status(404).send({ data: `You have typed an incorrect value, or it doesn't exist.` });
     };
 
-    drinks[index].name = name;
-    drinks[index].ingredients = ingredients;
-    res.send({ data: `Drink updated successfully.` })
+    drinks[index] = { ...drinks[index], ...req.body, id: ++nextId };
+    res.send({ data: `Drink updated successfully with id: ${providedDrinkId}.` })
 });
 
 app.patch((`/drinks/:id`), (req, res) => {
-    const id = Number(req.params.id);
-    const name = req.body.name;
-    const ingredients = req.body.ingredients;
+    const providedDrinkId = Number(req.params.id);
 
-    if(!id){
+    if(!providedDrinkId){
         return res.status(404).send({ data: `You have typed an incorrect value, or it doesn't exist.` });
     };
 
-    const index = drinks.findIndex(drink => drink.id === id);
+    const index = drinks.findIndex(drink => drink.id === providedDrinkId);
     if(index === -1){
         return res.status(404).send({ data: `You have typed an incorrect value, or it doesn't exist.` });
     };
-    if (name !== undefined) {
-        drinks[index].name = name;
-    };
-    if (ingredients !== undefined) {
-        drinks[index].ingredients = ingredients;
-    };
-    res.send({ data: `Drink updated succesfully.` });
+
+    drinks[index] = { ...drinks[index], ...req.body, id: providedDrinkId };
+    res.send({ data: `Drink updated succesfully with id: ${providedDrinkId}.` });
 });
 
 app.delete((`/drinks/:id`), (req, res) => {
-    const id = Number(req.params.id);
-    if(!id){
+    const providedDrinkId = Number(req.params.id);
+    if(!providedDrinkId){
         return res.status(404).send({ data: `You have typed an incorrect value, or it doesn't exist.` });
     };
 
-    const index = drinks.findIndex(drink => drink.id === id);
+    const index = drinks.findIndex(drink => drink.id === providedDrinkId);
     if(index === -1){
         return res.status(404).send({ data: `You have typed an incorrect value, or it doesn't exist.` });
     };
     drinks.splice(index, 1);
-    res.send({ data: `Drink deleted successfully.` });
+    res.send({ data: `Drink deleted successfully with id: ${providedDrinkId}` });
 });
 
 const PORT = 8080;
