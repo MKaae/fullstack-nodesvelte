@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time to live</title>
+    <style>
+        body {
+            background-color: lightblue;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: black;
+            font-family: sans-serif;
+            font-weight: bold;
+            position: relative;
+        }
+        .background {
+            display: none;
+            position: absolute; 
+            top: 50%; 
+            left: 0; 
+            width: 100%;
+            height: 100%; 
+            background-color: #7CFC00; 
+            z-index: -1; 
+        }
+        #selectors #circle_grid{
+            display:flex;
+            flex-direction: row;
+        }
+        #life_block{
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        #circle_grid{
+            display: flex;
+            flex-direction: row;
+        }
+        .circle {
+            display: flex;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%; 
+            background-color: white;
+            margin: 5px;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        #time_left {
+            font-size: 30px;
+        }
+        #current_age {
+            background-color: white;
+            border-radius: 7px;
+        }
+        #life_choices {
+            margin-top: 20px;
+        }
+        .circle p{
+            width: 80%;
+        }
+        .sun {
+            display: none;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 80px;
+            height: 80px;
+            background-color: yellow; 
+            border-radius: 50%; 
+            z-index: -1;         
+        }
+    </style>
+</head>
+<body>
+    <div class="background" id="background"></div>
+    <div class="sun" id="sun"></div>
+    <h1>Death clock</h1>
+    <div id="selectors">
+        <select id="day"></select>
+        <select id="month"></select>
+        <select id="year"></select>
+        <button id="init">Birthday selected</button>
+    </div>
+    <div>
+        <p id="current_age"></p>
+    </div>
+    <div id="life_block">
+        <p id="time_left">Time left to live</p>
+        <div id="circle_grid">
+            <div class="circle">
+                <p id="seconds_left"></p>
+            </div>
+            <div class="circle">
+                <p id="hours_left"></p>
+            </div>
+            <div class="circle">
+                <p id="days_left"></p>
+            </div>
+        </div>
+        <div id="life_choices">
+            <label><input type="checkbox" id="checkbox1" value="10">Smoker?</label>
+            <label><input type="checkbox" id="checkbox2" value="5">Heavy drinker?</label>
+            <label><input type="checkbox" id="checkbox3" value="9">Junkfood daily?</label>
+            <label><input type="checkbox" id="checkbox4" value="7">Physical inactive?</label>
+            <label><input type="checkbox" id="checkbox5" value="15">Opiod abuse?</label>
+            <label><input type="checkbox" id="checkbox6" value="7">Never sleep enough?</label>
+        </div>
+    </div>
+    <script>
+        const days = document.getElementById('day');
+        const months = document.getElementById('month');
+        const years = document.getElementById('year');
+        const date = new Date();
+
+        for(let i = 1; i <= 31; i++) {
+            let option = document.createElement('option');
+            option.text = i;
+            option.value = i;
+            days.add(option);
+        }
+
+        const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        for(let i = 1; i < 13; i++) {
+            let option = document.createElement('option');
+            option.text = monthNames[i-1];
+            option.value = i;
+            months.add(option);
+        }
+
+        const startYear = 1950;
+        const endYear = new Date().getFullYear();
+        for(let i = endYear; i >= startYear; i--) {
+            let option = document.createElement('option');
+            option.text = i;
+            option.value = i;
+            years.add(option);
+        }
+        
+        const button = document.getElementById('init');
+        button.addEventListener('click', init);
+        let birthDate = null;
+        let selectedAge = {};
+        let timerInterval;
+        
+        function init(){
+            selectedAge = {
+                day: days.value,
+                month: months.value,
+                year: years.value
+            }
+            const age = document.getElementById('current_age');
+            age.style.padding = '5px';
+            birthDate = new Date(selectedAge.year, selectedAge.month, selectedAge.day);
+            const currentAge = Math.floor((date - birthDate) / (1000 * 60 * 60 * 24 * 365.25));
+            age.textContent = `If you were born at ${selectedAge.day}, ${selectedAge.month}, ${selectedAge.year} you are ${currentAge} years old.`
+            document.getElementById("background").style.display = "block";
+            document.getElementById("sun").style.display = "block";
+            document.getElementById("life_block").style.display = "flex";
+            timers();
+        }  
+
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('click', handleCheckboxClick);
+        });
+
+        function handleCheckboxClick(event) {
+            let optionsValue = 0;
+            optionsValue = 0;
+            checkboxes.forEach(checkbox => {
+                if (checkbox.checked) {
+                    optionsValue += Number(checkbox.value);
+                }
+            });
+            clearInterval(timerInterval);
+            timers(optionsValue);
+        }
+
+        
+        function timers(reducedTime = 0) {
+            const secondsLeft = document.getElementById('seconds_left');
+            const hoursLeft = document.getElementById('hours_left');
+            const daysLeft = document.getElementById('days_left');
+            
+            function updateTimer() {
+                const deathDate = new Date(birthDate.getFullYear() + 80 - reducedTime, birthDate.getMonth(), birthDate.getDate(), 0, 0, 0);
+                deathDate.setSeconds(deathDate.getSeconds() - reducedTime);
+                const currentDate = new Date();
+                const remainingTime = deathDate - currentDate;
+
+                const seconds = Math.floor(remainingTime / 1000);
+                const hours = Math.floor(remainingTime / (1000 * 60 * 60));
+                const days = Math.floor(remainingTime / (1000 * 60 * 60 * 24));
+
+                secondsLeft.textContent = `You have ${seconds} seconds to live in.`;
+                hoursLeft.textContent = `You have ${hours} hours left to live in.`;
+                daysLeft.textContent = `You have ${days} days left to live in.`;
+
+                if(days < 1825){
+                    window.location.href = '/pastor';   
+                }
+
+                if (currentDate > deathDate) {
+                    clearInterval(timerInterval);
+                }
+            }
+            updateTimer();
+            timerInterval = setInterval(updateTimer, 1000);
+        }
+    </script>
+</body>
+</html>

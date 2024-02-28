@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pastor</title>
+    <style>
+        body {
+            background-color: rgb(181, 166, 166);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: black;
+            font-family: sans-serif;
+            font-weight: bold;
+            position: relative;
+            height: 100vh;
+        }
+        .background {
+            position: absolute; 
+            top: 50%; 
+            left: 0; 
+            width: 100%;
+            height: 100%; 
+            background-color: #5da514; 
+            z-index: -1; 
+        }
+        .sun {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 80px;
+            height: 80px;
+            background-color: rgb(156, 156, 254); 
+            border-radius: 50%; 
+            z-index: -1;         
+        }
+        a {
+            text-decoration: none;
+            color: black;
+            border: 3px solid black;
+            padding: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div class="background" id="background"></div>
+    <div class="sun" id="sun"></div>
+
+    <h1>Get your affairs in order, and call a pastor.</h1>
+    <h1>You have less than 5 years left of your life.</h1>
+    <h1>Or you can go back and change some life choices?</h1>
+    <a href="/">New life choices?</a>
+</body>
+</html>
