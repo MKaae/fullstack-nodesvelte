@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- META TAG HAR OGSÅ EN RELOAD FUNCTION -->
     <!-- <link rel="stylesheet" href="./homepage.css"> -->
     <style>
         h1 {
@@ -22,6 +23,11 @@
     <h2 id="greeting-text"></h2>
     <!-- this point to the endpoint public square not the file -->
     <a href="/publicSquare">Public Square</a>
+    <script>
+        // assignment redirect to publicsquare after 3 seconds on the page
+        // setTimeout(() => window.location.href = "/publicSquare", 3000)
+        setTimeout(() => window.location.replace("/publicSquare"), 3000);
+    </script>
     <script>
         // task make a request to /greeting and console log the greeting.
         const button = document.getElementById("button");

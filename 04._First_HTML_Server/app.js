@@ -9,6 +9,7 @@ app.get(`/`, (req, res) => {
 
 // assignment: Create a new route called publicsquare that serves publicSquare.html
 app.get(`/publicsquare`, (req, res) => {
+    console.log("Before redirecting"); // hvis du redirecter bliver den kaldt lige før redirect
     res.sendFile(__dirname + `/public/publicSquare/publicSquare.html`);
 });
 
@@ -26,6 +27,19 @@ app.get(`/greeting`, (req, res) => {
 
 app.get(`/knownpeople`, (req, res) => {
     res.send({ data: knownNames.length });
+});
+
+app.get(`/treasuretrove`, (req, res) =>{
+    res.send({ data: `You found it` })
+});
+
+app.get(`/secretpassphrase`, (req, res) => {
+    const reqBody = req.query.passphrase;
+    if(reqBody !== "SesameOpenUp"){
+        res.status(400).send({ data: `Wrong passphrase` });
+    } else {
+        res.redirect("/treasuretrove") // serverside redirection - clientside er når man gør det igennem browser
+    }
 });
 
 const PORT = 8080;
