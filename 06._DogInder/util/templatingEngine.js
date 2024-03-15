@@ -19,3 +19,6 @@ export function renderPage(page, config={}){
     + page 
     + footer;
 };
+
+// npx standard -> linter, checker til cleancode
+// npx standard --fix -> pas på med at bruge den her den ændrer alle ting i koden så det passer med linting
