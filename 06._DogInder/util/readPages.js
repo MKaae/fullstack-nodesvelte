@@ -15,3 +15,4 @@ export const matchesPage = renderPage(matches, {
     tabTitle: `DogInder Match`,
     CSSLinks: `<link rel="stylesheet" href="/pages/matches/matches.css">`
 });
+// nodemon --ext html,js,json app.js ------ den lukker og genstarter nodemon når der er ændringer på html js eller json
