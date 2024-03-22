@@ -4,49 +4,26 @@ const app = express();
 
 app.use(express.static("public"));
 
-// console.log(__dirname) //no work
-// console.log(path.resolve("public/homepage/homepage.html")) finds the absolute path
+app.use(express.urlencoded({ extended: true }));
 
 import playRouter from "./routers/playRouter.js"
 app.use(playRouter);
-// import matchesRouter from "./routers/matchesRouter.js"
-// app.use(matchesRouter);
+
 import pagesRouter from "./routers/pagesRouter.js"
 app.use(pagesRouter);
 
+import contactRouter from "./routers/contactRouters.js"
+app.use(contactRouter);
 
-// task: Creates a matchesRouter and put the matches route inside of it and combine it with the server
+// how to access env variables in node.js
+// $env:PORT="8080" - how to set global env variables in node.js
+// to set env vars in node.js just write PORT=8080 node app.js for instance
+// cross-env library help makes this work in windows
+// both nodemon and cross-env is a wrapper script to run in specific way
 
-// task research how to read files in Node.js
+console.log(process.env.PORT);
 
-// getMatches();
-
-// ======= HTML ======= 
-
-// app.get(`/`, (req, res) => {
-//     res.send(homepagePage);
-// });
-
-// // app.get(`/matches`, (req, res) => {
-// //     res.send(matchesPage);
-// // });
-
-// app.get(`/contact`, (req, res) => {
-//     res.send(contactPage);
-// });
-
-// // assignment create a contact page
-
-// // ======= API =======
-
-// app.get(`/api/matches`, async  (req, res) => {
-//     const matches = await getMatches();
-//     res.send({ data: matches })
-// });
-
-app.get(`/page`, (req, res) => {
-    res.send(``);
-});
-
-const PORT = 8080;
+const PORT = process.env.PORT ?? 8080;
 app.listen(PORT, () => console.log(`Server is running on`, PORT));
+
+// npm install --save-dev cross-env PACKAGE FOR ENV VARIABLES 

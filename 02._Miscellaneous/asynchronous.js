@@ -21,22 +21,19 @@
 //
 //
 //
-// new Promise((resolve, reject) => {
-//     setTimeout(() => {
-//         try {
-//             throw new Error("some error");
-//             // const functionReference = () => "NICE"; -- you can call this in then with successMessage()
-//             resolve("Everything ok")
-//         }catch(error) {
-//             // console.log(error)
-//             reject(error);
-//         }
-//     }, 2000)
-// })
+new Promise((resolve, reject) => {
+    setTimeout(() => {
+        try {
+            resolve("Everything ok")
+        }catch(error) {
+            reject(error);
+        }
+    }, 2000)
+})
 // resolve other functions inside then if you need a respons to the resolve
-// .then(successMessage => console.log(successMessage)) 
-// .catch(errorMessage => console.log(errorMessage));
-// console.log("I'm walking here...")
+.then(successMessage => console.log(successMessage)) 
+.catch(errorMessage => console.log(errorMessage));
+console.log("I'm walking here...")
 
 
 // assignment: Create a promisified function
@@ -49,7 +46,6 @@ function myPromise(){
     return new Promise((resolve, reject) => {
         setTimeout(() => {
             try{
-                throw "Oh no"
                 resolve("Value is true")
             }catch(error) {
                 reject("Value is false")

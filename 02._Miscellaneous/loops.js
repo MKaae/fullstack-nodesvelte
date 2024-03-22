@@ -12,7 +12,7 @@ const dogs = [
 
 const updatedDogs = dogs.map(dog => (
     {...dog, famelevel: dog.famelevel + 3}
-    ));
+));
 
 //would give one to one but all undefined
 //const updatedDogs = dogs.map((dog) => {})
