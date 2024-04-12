@@ -7,14 +7,12 @@
     function handleShowLove(childName){
         console.log(`${parentName} is loved by ${childName} very much.`)
     }
-    
+
     let treasureChest = ["🧌","🧟","🦠","🕸️","🪳","🐝","🦂","🧞‍♂️"]
 
-    function handleTakeFromTreasureChest(childName){
-        const item = treasureChest.pop();
+    function handleTakeFromTreasureChest(){
+        treasureChest.pop();
         treasureChest = treasureChest;
-
-        console.log(`${childName} has taking a ${item}`)
     }
     /* 
     assignment Create a treasure chest full of items (emoji)
@@ -22,9 +20,19 @@
     remember to follow conventions of handle and on
     display the treasures on the parents
     */
+
+    import { fridgeMessages } from "../../stores/fridgeMessageStore.js";
+
+    function wipeFridge(){
+        fridgeMessages.set([{ message: "Svelte Family Fridge"}]);
+    }
+   // assignment give parents the power to clear the fridge
 </script>
 
 <h1>{parentName}</h1>
+
+<button on:click={wipeFridge}>Wipe the fridge</button>
+
 {#each treasureChest as treasure}
     {treasure + ""}
 {/each}

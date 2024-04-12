@@ -1,5 +1,9 @@
-<slot></slot>
+<script>
+  import Fridge from "../Fridge/Fridge.svelte";
 
+</script>
+    <Fridge fridgeHeight={100} />
+    <slot></slot>
     <p>
         |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp&nbsp;
