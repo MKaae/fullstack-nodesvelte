@@ -1,0 +1,22 @@
+{
+  "name": "eclipse_movies-client",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "build:watch": "vite build --watch",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^3.0.2",
+    "svelte": "^4.2.12",
+    "vite": "^5.2.0"
+  },
+  "dependencies": {
+    "husky": "^9.0.11",
+    "is-ci": "^3.0.1",
+    "svelte-navigator": "^3.2.2"
+  }
+}
